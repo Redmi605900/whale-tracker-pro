@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whale Watcher Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐋 Whale Watcher Pro</h1>
+            <p class="subtitle">Real-time Ethereum Monitor</p>
+            <div class="price-tag">ETH Price: {{ eth_price }}</div>
+        </header>
+        <main>
+            {% for whale in whales %}
+            <div class="whale-card">
+                <div class="whale-name">{{ whale.name }}</div>
+                <div class="whale-address">{{ whale.address }}</div>
+                <div class="stats"><span class="stat-label">Balance:</span> <span class="stat-value">{{ whale.balance_eth }} ETH</span></div>
+                <div class="stats"><span class="stat-label">Value:</span> <span class="stat-value usd">{{ whale.balance_usd }}</span></div>
+            </div>            {% endfor %}
+        </main>
+        <footer><p>Built with Python | Open Source</p></footer>
+    </div>
+</body>
+</html>
