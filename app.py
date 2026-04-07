@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import requests
 import config
+import os
 
 app = Flask(__name__)
 
@@ -29,11 +30,12 @@ def get_balance(address):
             return 0.0
     except:
         return 0.0
+
 @app.route('/')
 def index():
     whale_data = []
     eth_price = get_eth_price()
-    
+
     for whale in config.WHALES:
         bal_eth = get_balance(whale['address'])
         bal_usd = bal_eth * eth_price
@@ -43,8 +45,9 @@ def index():
             "balance_eth": f"{bal_eth:.4f}",
             "balance_usd": f"${bal_usd:,.2f}"
         })
-    
+
     return render_template('index.html', whales=whale_data, eth_price=f"${eth_price:,.2f}")
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
